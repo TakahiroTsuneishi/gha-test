@@ -5,12 +5,10 @@ name: CI
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
-  # push:
-  #  branches: [ "main" ]
-  # pull_request:
-  #  branches: [ "main" ]
-  # issue_comment:
-  #  types: [created]
+  pull_request:
+    branches: [ main ]
+  issue_comment:
+    types: [created]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -19,6 +17,7 @@ on:
 jobs:
   # This workflow contains a single job called "build"
   build:
+    if: ${{ github.event_name == 'pull_request' || github.event_name == 'issue_comment' && startsWith(github.event.comment.body, 'hoge') }}
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
